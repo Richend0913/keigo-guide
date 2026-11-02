@@ -10,7 +10,7 @@ from datetime import datetime
 
 SITE_NAME = "敬語ガイド"
 SITE_URL = "https://richend0913.github.io/keigo-guide"
-ADSENSE = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6327505164684489" crossorigin="anonymous"></script>'
+ADSENSE = ''
 TODAY = datetime.now().strftime("%Y-%m-%d")
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -1218,10 +1218,7 @@ Webサイトの利用規約や注意書きでも「あらかじめご了承く�
 # ============================================================
 
 def adsense_tag():
-    return f"""<div class="ad-space">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6327505164684489" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
-</div>"""
+    return f""""""
 
 
 def head_block(title, description, canonical, extra_css=""):
