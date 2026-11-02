@@ -11,6 +11,7 @@ from datetime import datetime
 SITE_NAME = "敬語ガイド"
 SITE_URL = "https://richend0913.github.io/keigo-guide"
 ADSENSE = ''
+GA_TAG = '<script async src="https://www.googletagmanager.com/gtag/js?id=G-63VB4HT3T2"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag(\'js\',new Date());gtag(\'config\',\'G-63VB4HT3T2\',{page_area:\'keigo-guide\'});</script>'
 TODAY = datetime.now().strftime("%Y-%m-%d")
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -1221,10 +1222,47 @@ def adsense_tag():
     return f""""""
 
 
+# ─── A8.net 転職アフィリエイト（ライト配置） ─────────────────────────
+# shikaku-navi / salary-navi / mensetsu-guide で稼働中の承認済み転職プログラムと同一素材（a8mat）を共有。
+# ※本来はサイト別リンク発行が推奨。オーナーがA8管理画面で keigo-guide 副サイト登録・
+#   サイト別リンクを発行したら A8_AFF_URL / A8_PIXEL を差し替えること。
+A8_AFF_URL = "https://px.a8.net/svt/ejp?a8mat=4B1D5G+9K4NIQ+5BJK+5ZEMP"
+A8_PIXEL = '<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4B1D5G+9K4NIQ+5BJK+5ZEMP" alt="">'
+AMAZON_BOOK_URL = "https://www.amazon.co.jp/s?k=敬語+ビジネスマナー+本&tag=okuritegift-22"
+
+
+def _aff_cta(title, sub, btn):
+    return (
+        '<div class="aff-cta" style="margin:22px 0;padding:18px;'
+        'background:linear-gradient(135deg,#1e3a8a,#2563eb);border-radius:12px;text-align:center;color:#fff">'
+        '<div style="text-align:right;font-size:10px;letter-spacing:.15em;opacity:.85">広告・PR</div>'
+        f'<div style="font-size:17px;font-weight:bold;margin-bottom:6px">{title}</div>'
+        f'<div style="font-size:13px;margin-bottom:12px;opacity:.95">{sub}</div>'
+        f'<a href="{A8_AFF_URL}" rel="nofollow sponsored" target="_blank" '
+        'style="display:inline-block;background:#fff;color:#1e3a8a;padding:11px 26px;'
+        f'border-radius:8px;font-weight:bold;text-decoration:none">{btn} &rarr;</a></div>'
+    )
+
+
+# ライト配置：記事ページ末尾（詳しい解説の直後）に1ブロックのみ。導入部・中間・一覧ページの枠は空ける。
+AFF_ARTICLE_END = (
+    _aff_cta(
+        "&#128188; 身につけたビジネススキルを、次のキャリアに活かす",
+        "正しい敬語やビジネスマナーは、どの職場でも評価される基礎力です。今の環境以外の選択肢も知っておきたい方は、転職エージェントの無料相談で情報収集から始めてみませんか。",
+        "無料で転職相談してみる")
+    + "\n" + A8_PIXEL + "\n"
+    + '<p class="aff-book" style="text-align:center;font-size:13px;margin:0 0 22px">'
+    '<span style="font-size:10px;color:#888;margin-right:6px">広告・PR</span>'
+    f'&#128218; <a href="{AMAZON_BOOK_URL}" rel="nofollow sponsored noopener" target="_blank">'
+    '敬語・ビジネスマナーの本をAmazonで探す</a></p>'
+)
+
+
 def head_block(title, description, canonical, extra_css=""):
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
+{GA_TAG}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{html_mod.escape(title)} | {SITE_NAME}</title>
@@ -1406,7 +1444,7 @@ def generate_phrase_page(p):
 {explanation_paragraphs}
 </div>
 
-{adsense_tag()}
+{AFF_ARTICLE_END}
 
 {related_html}
 
